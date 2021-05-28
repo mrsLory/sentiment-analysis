@@ -5,4 +5,11 @@
 Программа использует несколько библиотек [NuGet](https://www.nuget.org), в частности:
 * [DeepMorphy](https://www.nuget.org/packages/DeepMorphy/) - морфологический анализатор русского языка
 * [TensorFlowSharp](https://www.nuget.org/packages/TensorFlowSharp/) - сборка открытой системы машинного обучения TensorFlow специально под .NET
-Чтобы установить пакеты, воспользуйтесь`nuget install packages.config`, следуя [этой инструкции](https://docs.microsoft.com/ru-ru/nuget/consume-packages/install-use-packages-nuget-cli)
+
+
+Чтобы установить пакеты, следуя [этой инструкции](https://docs.microsoft.com/ru-ru/nuget/consume-packages/install-use-packages-nuget-cli), воспользуйтесь
+
+`nuget install packages.config`
+
+---
+Программа написана как весенняя практика 2 курса, ПО-91Б. ЮЗГУ, 2021
