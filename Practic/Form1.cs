@@ -31,7 +31,7 @@ namespace Practic
             char[] separators = new char[] {' '};
             string inputText = richTextBox1.Text;
             inputText = Regex.Replace(inputText, "(?i)[^А-ЯЁA-Z]", " ");
-            string[] words = richTextBox1.Text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            string[] words = inputText.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
             int countPSTV = 0;
             int countNGTV = 0;
@@ -40,35 +40,59 @@ namespace Practic
             double okrasNGTV = 0;
             double okrasSum;
 
+            richTextBox1.Text = "";
             foreach (var word in words)
             {
                 var results = morph.Parse(word).ToArray();
                 var morphInfo = results[0];
+                bool isInDict = false;
                 string lemma = morphInfo.BestTag.Lemma;
                 
                 for (int i = 0; i < slovo.Length; i++)
                 {
                     if (slovo[i] == lemma)
                     {
-
+                        isInDict = true;
                         double okrasCur = okras[i];
-                        if (okrasCur > 0.5) countPSTV++;
-                        if (okrasCur < -0.5) countNGTV++;
+                        if (okrasCur > 0.5)
+                        {
+                            countPSTV++;
+                            richTextBox1.AppendText(word + ' ');
+                            richTextBox1.Select(richTextBox1.TextLength - word.Length - 1, word.Length);
+                            richTextBox1.SelectionColor = Color.Green;
+                        }
+                        else if (okrasCur < -0.5)
+                        {
+                            countNGTV++;
+                            richTextBox1.AppendText(word + ' ');
+                            richTextBox1.Select(richTextBox1.TextLength - word.Length - 1, word.Length);
+                            richTextBox1.SelectionColor = Color.Red;
+                        }
+                        else
+                        {
+                            richTextBox1.AppendText(word + ' ');
+                            richTextBox1.Select(richTextBox1.TextLength - word.Length - 1, word.Length);
+                            richTextBox1.SelectionColor = Color.Black;
+                        }
                         if (okrasCur > 0) okrasPSTV += okrasCur;
                         if (okrasCur < 0) okrasNGTV += okrasCur;
                         break;
                     }
                 }
+                if (!isInDict)
+                {
+                    richTextBox1.AppendText(word + ' ');
+                    richTextBox1.Select(richTextBox1.TextLength - word.Length - 1, word.Length);
+                    richTextBox1.SelectionColor = Color.Black;
+                }
             }
             countNEUT = words.Length - countNGTV - countPSTV;
             okrasSum = okrasNGTV + okrasPSTV;
-            string emot;
+     
 
             textBox1.Text = countPSTV.ToString();
             textBox2.Text = countNGTV.ToString();
             textBox3.Text = countNEUT.ToString();
-            // textBox4.Text = okrasSum.ToString();
-
             if (okrasSum > 0) textBox4.Text = "Полож";
             else textBox4.Text = "Отриц";
 
