@@ -78,7 +78,7 @@ namespace Practic
         {
             
 
-            string dictPath = "lemmatizedDict.txt";
+            string dictPath = "../../lemmatizedDict.txt";
             string[] strokiSlovar = File.ReadAllLines(dictPath);
 
             slovo = new string[strokiSlovar.Length];
