@@ -36,9 +36,7 @@ namespace Practic
             int countPSTV = 0;
             int countNGTV = 0;
             int countNEUT;
-            double okrasPSTV = 0;
-            double okrasNGTV = 0;
-            double okrasSum;
+            double okrasSum = 0;
 
             richTextBox1.Text = "";
             foreach (var word in words)
@@ -60,6 +58,7 @@ namespace Practic
                             richTextBox1.AppendText(word + ' ');
                             richTextBox1.Select(richTextBox1.TextLength - word.Length - 1, word.Length);
                             richTextBox1.SelectionColor = Color.Green;
+                            okrasSum+= okrasCur;
                         }
                         else if (okrasCur < -0.5)
                         {
@@ -67,6 +66,7 @@ namespace Practic
                             richTextBox1.AppendText(word + ' ');
                             richTextBox1.Select(richTextBox1.TextLength - word.Length - 1, word.Length);
                             richTextBox1.SelectionColor = Color.Red;
+                            okrasSum += okrasCur;
                         }
                         else
                         {
@@ -74,8 +74,6 @@ namespace Practic
                             richTextBox1.Select(richTextBox1.TextLength - word.Length - 1, word.Length);
                             richTextBox1.SelectionColor = Color.Black;
                         }
-                        if (okrasCur > 0) okrasPSTV += okrasCur;
-                        if (okrasCur < 0) okrasNGTV += okrasCur;
                         break;
                     }
                 }
@@ -87,7 +85,6 @@ namespace Practic
                 }
             }
             countNEUT = words.Length - countNGTV - countPSTV;
-            okrasSum = okrasNGTV + okrasPSTV;
      
 
             textBox1.Text = countPSTV.ToString();
